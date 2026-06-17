@@ -12,10 +12,6 @@ export default function App() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [search, setSearch] = useState("");
 
-  // Show QR generator at /qr
-  const isQRPage = window.location.pathname === "/qr";
-  if (isQRPage) return <QRPage />;
-
   const filtered = useMemo(() => {
     if (!search.trim()) return menuItems;
     const q = search.toLowerCase();
@@ -26,10 +22,15 @@ export default function App() {
     );
   }, [search]);
 
+  // Show QR generator at /qr (after all hooks)
+  const isQRPage = window.location.pathname === "/qr";
+
   const handleCategoryChange = (cat) => {
     setActiveCategory(cat);
     setSearch("");
   };
+
+  if (isQRPage) return <QRPage />;
 
   return (
     <div style={{ maxWidth: 680, margin: "0 auto", minHeight: "100vh" }}>
